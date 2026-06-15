@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useFlowStore } from './store/useFlowStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CheckCircle, XCircle } from 'lucide-react';
+import { HistoryPage } from './pages/HistoryPage';
 
 // Simple Toast Component
 function Toast({ message, type }: { message: string, type: 'success' | 'error' }) {
@@ -94,6 +95,20 @@ function App() {
       if (ws) ws.close();
     };
   }, [setWsConnected, setNodeStatus, setIsExecuting]);
+
+  // Simple routing
+  const path = window.location.pathname;
+
+  if (path === '/history') {
+    return (
+      <div className="flex flex-col h-screen overflow-hidden bg-[#0f0f1a] text-gray-100">
+        <Toolbar />
+        <div className="flex-1 overflow-auto">
+          <HistoryPage />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-[#0f0f1a] text-gray-100">

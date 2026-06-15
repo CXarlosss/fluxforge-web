@@ -6,17 +6,30 @@ import { TriggerNode } from './nodes/TriggerNode';
 import { HttpNode } from './nodes/HttpNode';
 import { LogNode } from './nodes/LogNode';
 import { CodeNode } from './nodes/CodeNode';
+import { DatabaseNode } from './nodes/DatabaseNode';
+import { EmailNode } from './nodes/EmailNode';
+import { DelayNode } from './nodes/DelayNode';
+import { FilterNode } from './nodes/FilterNode';
+import { WebhookNode } from './nodes/WebhookNode';
 import { AnimatedEdge } from './AnimatedEdge';
+import { ConditionalEdge } from './edges/ConditionalEdge';
 
 const nodeTypes = {
   trigger: TriggerNode,
   http: HttpNode,
   log: LogNode,
   code: CodeNode,
+  database: DatabaseNode,
+  email: EmailNode,
+  delay: DelayNode,
+  filter: FilterNode,
+  webhook: WebhookNode,
 };
 
 const edgeTypes = {
   default: AnimatedEdge,
+  'conditional-true': ConditionalEdge,
+  'conditional-false': ConditionalEdge,
 };
 
 function FlowCanvas() {
@@ -49,6 +62,11 @@ function FlowCanvas() {
       if (type === 'http') label = 'HTTP Request';
       if (type === 'log') label = 'Log';
       if (type === 'code') label = 'Code Sandbox';
+      if (type === 'database') label = 'Database';
+      if (type === 'email') label = 'Email';
+      if (type === 'delay') label = 'Delay';
+      if (type === 'filter') label = 'Filter';
+      if (type === 'webhook') label = 'Webhook';
 
       const newNode = {
         id: `${type}-${Date.now()}`,
@@ -92,6 +110,11 @@ function FlowCanvas() {
             if (node.type === 'http') return '#2563eb';
             if (node.type === 'log') return '#4b5563';
             if (node.type === 'code') return '#eab308';
+            if (node.type === 'database') return '#3b82f6';
+            if (node.type === 'email') return '#a855f7';
+            if (node.type === 'delay') return '#f59e0b';
+            if (node.type === 'filter') return '#10b981';
+            if (node.type === 'webhook') return '#6366f1';
             return '#eee';
           }}
           maskColor="rgba(15, 15, 26, 0.7)"

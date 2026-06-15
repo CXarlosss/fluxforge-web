@@ -47,6 +47,7 @@ export type FlowState = {
   onConnect: OnConnect;
   addNode: (node: Node) => void;
   removeNode: (nodeId: string) => void;
+  updateNode: (nodeId: string, newData: Record<string, any>) => void;
   updateNodeLabel: (nodeId: string, label: string) => void;
   updateNodeCode: (nodeId: string, code: string) => void;
   setSelectedNodeId: (id: string | null) => void;
@@ -95,6 +96,16 @@ export const useFlowStore = create<FlowState>((set, get) => ({
         (edge) => edge.source !== nodeId && edge.target !== nodeId
       ),
       selectedNodeId: get().selectedNodeId === nodeId ? null : get().selectedNodeId,
+    });
+  },
+  updateNode: (nodeId: string, newData: Record<string, any>) => {
+    set({
+      nodes: get().nodes.map((node) => {
+        if (node.id === nodeId) {
+          return { ...node, data: { ...node.data, ...newData } };
+        }
+        return node;
+      }),
     });
   },
   updateNodeLabel: (nodeId: string, label: string) => {
