@@ -40,6 +40,7 @@ export function LoginModal() {
             <label className="block text-sm font-medium text-gray-400 mb-1">Email</label>
             <input
               type="email"
+              autoComplete="username"
               className="w-full bg-[#0f0f1a] border border-gray-700 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -50,6 +51,7 @@ export function LoginModal() {
             <label className="block text-sm font-medium text-gray-400 mb-1">Password</label>
             <input
               type="password"
+              autoComplete="current-password"
               className="w-full bg-[#0f0f1a] border border-gray-700 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
