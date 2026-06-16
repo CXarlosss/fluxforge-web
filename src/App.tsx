@@ -38,7 +38,10 @@ function App() {
     let reconnectTimeout: ReturnType<typeof setTimeout>;
 
     const connect = () => {
-      const wsBase = import.meta.env.VITE_WS_URL || 'ws://localhost:3001';
+      let wsBase = import.meta.env.VITE_WS_URL || 'ws://localhost:3001';
+      if (wsBase.endsWith('/api/workflow/ws')) {
+        wsBase = wsBase.replace(/\/api\/workflow\/ws\/?$/, '');
+      }
       ws = new WebSocket(`${wsBase}/api/workflow/ws`);
 
       ws.onopen = () => {

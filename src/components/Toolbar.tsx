@@ -15,7 +15,8 @@ export function Toolbar() {
     setLastError(null);
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      let apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      if (apiUrl.endsWith('/api/workflow/execute')) apiUrl = apiUrl.replace(/\/api\/workflow\/execute\/?$/, '');
       const token = useAuthStore.getState().token;
       const response = await fetch(`${apiUrl}/api/workflow/execute`, {
         method: 'POST',
@@ -39,7 +40,8 @@ export function Toolbar() {
 
   const handleExport = async () => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      let apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      if (apiUrl.endsWith('/api/workflow/execute')) apiUrl = apiUrl.replace(/\/api\/workflow\/execute\/?$/, '');
       const token = useAuthStore.getState().token;
       const response = await fetch(`${apiUrl}/api/workflow/export/n8n`, {
         method: 'POST',

@@ -30,7 +30,8 @@ export const HistoryPage: React.FC = () => {
   }, [filter]);
 
   const fetchExecutions = async () => {
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+    let apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+    if (apiUrl.endsWith('/api/workflow/execute')) apiUrl = apiUrl.replace(/\/api\/workflow\/execute\/?$/, '');
     const url = filter === 'all' 
       ? `${apiUrl}/api/executions?limit=50`
       : `${apiUrl}/api/executions?limit=50&status=${filter}`;
