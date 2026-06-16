@@ -1,6 +1,8 @@
 import { Play, Loader2, Download, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useReactFlow } from 'reactflow';
 import { useFlowStore } from '../store/useFlowStore';
+import { useAuthStore } from '../store/useAuthStore';
 import { useState } from 'react';
 
 export function Toolbar() {
@@ -15,9 +17,13 @@ export function Toolbar() {
 
     try {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const token = useAuthStore.getState().token;
       const response = await fetch(`${apiUrl}/api/workflow/execute`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` 
+        },
         body: JSON.stringify({ nodes, edges })
       });
       
@@ -25,6 +31,7 @@ export function Toolbar() {
       if (!response.ok) {
         throw new Error(data.error || 'Execution failed');
       }
+      setIsExecuting(false);
     } catch (err: any) {
       setLastError(err.message);
       setIsExecuting(false);
@@ -34,9 +41,13 @@ export function Toolbar() {
   const handleExport = async () => {
     try {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const token = useAuthStore.getState().token;
       const response = await fetch(`${apiUrl}/api/workflow/export/n8n`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({ nodes, edges }),
       });
 

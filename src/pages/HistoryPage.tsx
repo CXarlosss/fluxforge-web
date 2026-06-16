@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Play, RotateCcw, Calendar, Clock, CheckCircle, XCircle, SkipForward } from 'lucide-react';
+import { useAuthStore } from '../store/useAuthStore';
 
 interface Execution {
   id: number;
@@ -34,7 +35,12 @@ export const HistoryPage: React.FC = () => {
       : `http://localhost:3001/api/executions?limit=50&status=${filter}`;
     
     try {
-      const res = await fetch(url);
+      const token = useAuthStore.getState().token;
+      const res = await fetch(url, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       const data = await res.json();
       setExecutions(data);
     } catch (e) {

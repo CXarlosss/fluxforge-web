@@ -8,6 +8,8 @@ import { useFlowStore } from './store/useFlowStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CheckCircle, XCircle } from 'lucide-react';
 import { HistoryPage } from './pages/HistoryPage';
+import { LoginModal } from './components/LoginModal';
+import { useAuthStore } from './store/useAuthStore';
 
 // Simple Toast Component
 function Toast({ message, type }: { message: string, type: 'success' | 'error' }) {
@@ -28,6 +30,7 @@ function Toast({ message, type }: { message: string, type: 'success' | 'error' }
 
 function App() {
   const { setWsConnected, setNodeStatus, setIsExecuting } = useFlowStore();
+  const token = useAuthStore((state) => state.token);
   const [toast, setToast] = useState<{message: string, type: 'success' | 'error'} | null>(null);
 
   useEffect(() => {
@@ -112,6 +115,7 @@ function App() {
 
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-[#0f0f1a] text-gray-100">
+      {!token && <LoginModal />}
       <Toolbar />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
