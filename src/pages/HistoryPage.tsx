@@ -30,9 +30,10 @@ export const HistoryPage: React.FC = () => {
   }, [filter]);
 
   const fetchExecutions = async () => {
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
     const url = filter === 'all' 
-      ? 'http://localhost:3001/api/executions?limit=50'
-      : `http://localhost:3001/api/executions?limit=50&status=${filter}`;
+      ? `${apiUrl}/api/executions?limit=50`
+      : `${apiUrl}/api/executions?limit=50&status=${filter}`;
     
     try {
       const token = useAuthStore.getState().token;
