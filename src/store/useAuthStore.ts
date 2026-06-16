@@ -13,7 +13,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   
   login: async (email, password) => {
     // Para local dev (localhost) u OnRender
-    const AUTH_URL = 'http://localhost:4000'; // O cambiar a authforge-api.onrender.com
+    const AUTH_URL = import.meta.env.VITE_AUTHFORGE_URL || 'http://localhost:4000';
     const res = await fetch(`${AUTH_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
